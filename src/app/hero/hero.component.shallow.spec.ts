@@ -1,5 +1,6 @@
 import { HeroComponent } from './hero.component';
 import { TestBed, ComponentFixture } from '@angular/core/testing';
+import { NO_ERRORS_SCHEMA } from '@angular/core';
 
 describe('Hero Component (Shallow)', () => {
   let fixture: ComponentFixture<HeroComponent>;
@@ -12,7 +13,8 @@ describe('Hero Component (Shallow)', () => {
     //    functionality added.
     // this acts as the resolution context for directives etc
     TestBed.configureTestingModule({
-      declarations: [ HeroComponent ]
+      declarations: [ HeroComponent ],
+      schemas: [ NO_ERRORS_SCHEMA ]
     });
 
     fixture = TestBed.createComponent(HeroComponent);
@@ -23,7 +25,7 @@ describe('Hero Component (Shallow)', () => {
     fixture.componentInstance.hero = { id: 1, name: 'SuperDude', strength: 3 };
 
     const neA = fixture.nativeElement.querySelector('a');
-    expect(neA.innerText).toContain('SuperDude');
+    expect(neA.textContent).toContain('SuperDude');
   });
 
 });
