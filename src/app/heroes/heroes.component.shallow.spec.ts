@@ -1,14 +1,24 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { HeroesComponent } from './heroes.component';
-import { NO_ERRORS_SCHEMA } from '@angular/core';
-import { HeroService } from '../hero.service';
+import { NO_ERRORS_SCHEMA, Component, Input, Output, EventEmitter } from '@angular/core';
 import { of } from 'rxjs';
 import { By } from '@angular/platform-browser';
+
+import { HeroesComponent } from './heroes.component';
+import { HeroService } from '../hero.service';
 
 describe('Heroes Component (Shallow tests)', () => {
   let fixture: ComponentFixture<HeroesComponent>;
   let HEROES;
   let mockHeroService;
+
+  @Component({
+    selector: 'app-hero',
+    template: '<div></div>',
+  })
+  class FakeHeroComponent {
+    @Input() hero;
+    @Output() delete = new EventEmitter();
+  }
 
   beforeEach(() => {
     HEROES = [
@@ -21,8 +31,13 @@ describe('Heroes Component (Shallow tests)', () => {
 
     // create testing module
     TestBed.configureTestingModule({
-      declarations: [HeroesComponent],
-      schemas: [NO_ERRORS_SCHEMA],
+      declarations: [
+        HeroesComponent,
+        FakeHeroComponent
+      ],
+      // removing this setting as this would hide any incorrect element declarations
+      // originally we added to ignore child components
+      // schemas: [NO_ERRORS_SCHEMA],
       providers: [
         { provide: HeroService, useValue: mockHeroService }
       ]
