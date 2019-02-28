@@ -2,7 +2,7 @@ import { of } from 'rxjs/index';
 
 import { HeroesComponent } from './heroes.component';
 
-describe('HeroesComponent', () => {
+describe('HeroesComponent (Unit Tests)', () => {
   let component: HeroesComponent;
   let HEROES;
   let mockHeroService;

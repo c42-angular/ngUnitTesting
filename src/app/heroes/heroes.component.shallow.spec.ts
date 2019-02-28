@@ -1,10 +1,12 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { HeroesComponent } from './heroes.component';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
+import { HeroService } from '../hero.service';
 
 describe('Heroes Component (Shallow tests)', () => {
   let fixture: ComponentFixture<HeroesComponent>;
   let HEROES;
+  let mockHeroService;
 
   beforeEach(() => {
     HEROES = [
@@ -13,10 +15,15 @@ describe('Heroes Component (Shallow tests)', () => {
       { id: 3, name: 'SuperDude', strength: 55 }
     ];
 
+    mockHeroService = jasmine.createSpyObj(['getHeroes', 'addHero', 'deleteHero']);
+
     // create testing module
     TestBed.configureTestingModule({
       declarations: [HeroesComponent],
-      schemas: [NO_ERRORS_SCHEMA]
+      schemas: [NO_ERRORS_SCHEMA],
+      providers: [
+        { provide: HeroService, useValue: mockHeroService }
+      ]
     });
 
     // create the wrapped component geared for testing
