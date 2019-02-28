@@ -2,6 +2,8 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { HeroesComponent } from './heroes.component';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { HeroService } from '../hero.service';
+import { of } from 'rxjs';
+import { By } from '@angular/platform-browser';
 
 describe('Heroes Component (Shallow tests)', () => {
   let fixture: ComponentFixture<HeroesComponent>;
@@ -31,7 +33,17 @@ describe('Heroes Component (Shallow tests)', () => {
   });
 
   it('should get list of heroes', () => {
+    mockHeroService.getHeroes.and.returnValue(of(HEROES));
+    fixture.detectChanges(); // runs change detection that also calls ngInit()
 
+    expect(fixture.componentInstance.heroes.length).toBe(3);
   });
 
+  it('should create a li for each hero', () => {
+    mockHeroService.getHeroes.and.returnValue(of(HEROES));
+    fixture.detectChanges(); // runs change detection that also calls ngInit()
+
+    // check template that it has 3 li elements
+    expect(fixture.debugElement.queryAll(By.css('li')).length).toBe(3);
+  });
 });
